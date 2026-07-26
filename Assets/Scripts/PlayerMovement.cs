@@ -42,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
     {
         charcontroller = GetComponent<CharacterController>();
         playerCamera = Camera.main;
+        Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center of the screen and invisible
     }
 
     // Update is called once per frame
@@ -101,8 +102,19 @@ public class PlayerMovement : MonoBehaviour
         
         
         charcontroller.Move(movement *Time.deltaTime); 
-        
 
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Cursor.lockState = CursorLockMode.None; // Unlock the cursor when Escape key is pressed
+        }
+        else if (Cursor.lockState == CursorLockMode.None)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Cursor.lockState = CursorLockMode.Locked; // Lock the cursor when left mouse button is pressed
+            }
+        }
     }
 
 
