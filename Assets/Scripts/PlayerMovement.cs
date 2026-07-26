@@ -1,3 +1,5 @@
+//Import namespace libaries 
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +10,8 @@ using UnityEngine.InputSystem;
 //Time.deltaTime is used to calculate how long the key has been held down for
 public class PlayerMovement : MonoBehaviour
 {
+
+    //Initilization
     public float moveSpeed; // The speed at which the player moves (Standard speed)
     private CharacterController charcontroller;
     private float horizontalInput; // The horizontal input from the player
@@ -45,6 +49,13 @@ public class PlayerMovement : MonoBehaviour
     private float shootCounter;
 
     public GameObject muzzle;
+
+
+    // ammo
+
+    public int mag = 5; // amount of magazines
+    public int ammo = 25;
+    public int ammoAmount = 25; // amount of ammo in each mag
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -116,24 +127,33 @@ public class PlayerMovement : MonoBehaviour
         gunAnim.SetFloat("Speed", new Vector3(moveDirection.x, 0f, moveDirection.z).magnitude); // Set the speed parameter of the gun animator based on the player's movement speed
 
 
-        if (Input.GetMouseButtonDown(0)) // Semi-automatic firing
+        if (Input.GetMouseButtonDown(0) & ammo > 0) // Semi-automatic firing check that there is ammo left in the mag
         {
             StartCoroutine(MuzzleFlah()); // Call MuzzleFlash Function
             Shoot();
             gunAnim.SetTrigger("Shoot");
+
+            ammo --;
         }
 
 
-        if(Input.GetMouseButton(0)) // Automatic firing
+        if(Input.GetMouseButton(0) & ammo > 0) // Automatic firing check that there is ammo left in the mag
         {
             shootCounter -= Time.deltaTime;
             if(shootCounter <= 0)
             {
                 StartCoroutine(MuzzleFlah()); // Call MuzzleFlash Function
                 Shoot();
+                gunAnim.SetTrigger("Shoot");
+                
+                ammo --; // Decrement ammo by 1
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Reload();
+        }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -148,7 +168,15 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void Reload() // Remove mag and then replace ammo with ammount in the mag
+    {
+        if (mag > 0)
+        {
+            mag--;
+            ammo = ammoAmount;
 
+        }
+    }
     
     IEnumerator MuzzleFlah() //Function for muzzle flash effect when shooting with a wait time of 0.02 seconds
     {
