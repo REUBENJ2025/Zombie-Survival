@@ -1,10 +1,11 @@
 //Import namespace libaries 
 
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.InputSystem;
+using System.Collections; //Used for IEnumerator and coroutine
+using System.Collections.Generic; // Used for Lists and Dictionaries (Shown by <>)
+using UnityEngine; // Standard Unity libary such as Vectors and Physics
+using UnityEngine.AI; // Unity Libary for pathfinding and AI implimentation 
+using UnityEngine.InputSystem; // User inputs for keyboard/controller
+using UnityEngine.UI; //Import libary for text element adjustments
 
 //Using float data type for movement speed and jump force to mak it smoother and more precise.
 //Time.deltaTime is used to calculate how long the key has been held down for
@@ -57,10 +58,17 @@ public class PlayerMovement : MonoBehaviour
     public int ammo = 25;
     public int ammoAmount = 25; // amount of ammo in each mag
 
+    public Text ammoText;
+    public Text magText;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
+        magText.text = mag.ToString(); //Casting to String 
+        ammoText.text = ammo + "/" + ammoAmount;
+
         charcontroller = GetComponent<CharacterController>();
         playerCamera = Camera.main;
         Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center of the screen and invisible
@@ -134,6 +142,8 @@ public class PlayerMovement : MonoBehaviour
             gunAnim.SetTrigger("Shoot");
 
             ammo --;
+        magText.text = mag.ToString(); //Casting to String 
+        ammoText.text = ammo + "/" + ammoAmount;
         }
 
 
@@ -147,6 +157,8 @@ public class PlayerMovement : MonoBehaviour
                 gunAnim.SetTrigger("Shoot");
                 
                 ammo --; // Decrement ammo by 1
+                magText.text = mag.ToString(); //Casting to String 
+                ammoText.text = ammo + "/" + ammoAmount;
             }
         }
 
@@ -176,6 +188,10 @@ public class PlayerMovement : MonoBehaviour
             ammo = ammoAmount;
 
         }
+        //Change to function later
+        magText.text = mag.ToString(); //Casting to String  
+        ammoText.text = ammo + "/" + ammoAmount;
+
     }
     
     IEnumerator MuzzleFlah() //Function for muzzle flash effect when shooting with a wait time of 0.02 seconds
