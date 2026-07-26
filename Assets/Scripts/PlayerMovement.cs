@@ -37,6 +37,9 @@ public class PlayerMovement : MonoBehaviour
     private Camera playerCamera;
 
 
+    public GameObject hitEffectPrefab; //Impact effect
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -132,6 +135,7 @@ public class PlayerMovement : MonoBehaviour
        if (Physics.Raycast(ray, out RaycastHit hit))
          {
                 Debug.Log("We shoot shot" + hit.collider.gameObject.name); // Log the name of the object that was hit by the raycast
+                Instantiate(hitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal)); //Instantiate creates an object for hit effects
          }
     }
 
