@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -7,6 +9,13 @@ public class EnemyController : MonoBehaviour
     public float detectingRange;
     public float moveSpeed;
     private Animator anim;
+
+    //combat
+
+    public float attackingRange = 2.5f;
+    private bool isAttacking = false;
+    public float timeBetweenAttacks = 0.8f;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,15 +33,26 @@ public class EnemyController : MonoBehaviour
         float distance = Vector3.Distance(transform.position, player.transform.position); // Check distance from one position to the player 
         Debug.Log(distance); // Output distance in console 
 
-        if (distance < detectingRange)
+        if (distance < detectingRange) // Conditional statements to check if inRange distance or in range for zombie to attack the player and if zombie should chase player or go idle 
         {
             anim.SetBool("inRange", true); // Set inRage to true to make zombie run 
-            MoveTowards();
+
+
+            if (distance <= attackingRange && !isAttacking)
+            {
+                StartCoroutine(AttackAfterDelay()); // Use coroutine instead of function to be used later and allow for delays and allows for it to be paused or unpaused  
+            }
+
+            else if (!isAttacking)
+            {
+                MoveTowards();
+            }
+
         }
-        else
-        {
-            anim.SetBool("inRange", false); // If not in detecting range then zombie will not run 
-        }
+            else
+            {
+                anim.SetBool("inRange", false); // If not in detecting range then zombie will not run 
+            }
 
 
     }
@@ -51,5 +71,13 @@ public class EnemyController : MonoBehaviour
 
 
 
+    }
+
+    IEnumerator AttackAfterDelay() // Function for Attack Delay between Attacking or not Attacking
+    {
+        isAttacking = true;
+        anim.SetTrigger("Attack");
+        yield return new WaitForSeconds(timeBetweenAttacks);
+        isAttacking = false;
     }
 }

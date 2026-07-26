@@ -1039,6 +1039,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
   detectingRange: 10
   moveSpeed: 3
+  attackingRange: 2
+  timeBetweenAttacks: 0.8
 --- !u!1 &786365353
 GameObject:
   m_ObjectHideFlags: 0
