@@ -98,7 +98,11 @@ public class EnemyController : MonoBehaviour
         currentHealth -= damageAmount; // Value of Damage Amount is damage of gun to reduce zombie's health 
         if(currentHealth <= 0) // Zombie is dead if health is <= 0 
         {
-            Destroy(gameObject);
+            anim.SetTrigger("Dead");
+            GetComponent<Collider>().enabled = false;
+            GetComponent<EnemyController>().enabled = false;
+
+            Destroy(gameObject,2f);
         }
     }
 }
