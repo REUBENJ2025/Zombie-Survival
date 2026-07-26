@@ -216,6 +216,11 @@ public class PlayerMovement : MonoBehaviour
                 // gunAnim.SetTrigger("Shoot");
                 Debug.Log("We shoot shot" + hit.collider.gameObject.name); // Log the name of the object that was hit by the raycast
                 Instantiate(hitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal)); //Instantiate creates an object for hit effects
+
+                if(hit.collider.CompareTag("Enemy")) // Enemy Tag is able to be used across multiple scripts to track damage of zombies
+                {
+                    EnemyController.instance.TakeDamage();
+                }
          }
          shootCounter = timeBetweenShots;
     }

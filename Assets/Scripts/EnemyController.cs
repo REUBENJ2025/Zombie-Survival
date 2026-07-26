@@ -10,28 +10,40 @@ public class EnemyController : MonoBehaviour
     public float moveSpeed;
     private Animator anim;
 
-    //combat
+    //enemy combat
 
     public float attackingRange = 2.5f;
     private bool isAttacking = false;
     public float timeBetweenAttacks = 0.8f;
 
 
+    //enemy health
+    public int currentHealth,maxHealth, damageAmount;
+
+    public static EnemyController instance; // Name of script 
+
+    private void Awake() // Runs before game starts 
+    {
+        instance = this; 
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Start() //Run when game starts
     {   
         //Using Tag system to play Animations 
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player"); // Tells Unity we are refering to player 
+
+        currentHealth = maxHealth; // Auto Updates
     }
 
-    // Update is called once per frame
-    void Update()
+    // Update is called once per frame while game running 
+    void Update() 
     {
         //Distance checker from zombie
 
         float distance = Vector3.Distance(transform.position, player.transform.position); // Check distance from one position to the player 
-        Debug.Log(distance); // Output distance in console 
+        // Debug.Log(distance); // Output distance in console 
 
         if (distance < detectingRange) // Conditional statements to check if inRange distance or in range for zombie to attack the player and if zombie should chase player or go idle 
         {
@@ -79,5 +91,14 @@ public class EnemyController : MonoBehaviour
         anim.SetTrigger("Attack");
         yield return new WaitForSeconds(timeBetweenAttacks);
         isAttacking = false;
+    }
+
+    public void TakeDamage() // Zombie taking damage from player's gun  
+    {
+        currentHealth -= damageAmount; // Value of Damage Amount is damage of gun to reduce zombie's health 
+        if(currentHealth <= 0) // Zombie is dead if health is <= 0 
+        {
+            Destroy(gameObject);
+        }
     }
 }
