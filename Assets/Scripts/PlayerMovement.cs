@@ -135,7 +135,8 @@ public class PlayerMovement : MonoBehaviour
         gunAnim.SetFloat("Speed", new Vector3(moveDirection.x, 0f, moveDirection.z).magnitude); // Set the speed parameter of the gun animator based on the player's movement speed
 
 
-        if (Input.GetMouseButtonDown(0) & ammo > 0) // Semi-automatic firing check that there is ammo left in the mag
+        // Semi-automatic firing check that there is ammo left in the mag
+        if (Input.GetMouseButtonDown(0) & ammo > 0 && !gunAnim.GetCurrentAnimatorStateInfo(0).IsName("Reload")) //Defensive programming (Prevent shooting during reload animation)
         {
             StartCoroutine(MuzzleFlah()); // Call MuzzleFlash Function
             Shoot();
@@ -147,7 +148,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if(Input.GetMouseButton(0) & ammo > 0) // Automatic firing check that there is ammo left in the mag
+        // Automatic firing check that there is ammo left in the mag
+        if(Input.GetMouseButton(0) && ammo > 0 && !gunAnim.GetCurrentAnimatorStateInfo(0).IsName("Reload")) //Defensive programming (Prevent shooting during reload animation)
         {
             shootCounter -= Time.deltaTime;
             if(shootCounter <= 0)
@@ -185,6 +187,8 @@ public class PlayerMovement : MonoBehaviour
         if (mag > 0)
         {
             mag--;
+            gunAnim.SetTrigger("Reload");
+
             ammo = ammoAmount;
 
         }
