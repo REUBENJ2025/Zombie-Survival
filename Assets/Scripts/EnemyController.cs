@@ -22,6 +22,9 @@ public class EnemyController : MonoBehaviour
 
     public static EnemyController instance; // Name of script 
 
+    public GameObject deathEffectPrefab;
+
+
     private void Awake() // Runs before game starts 
     {
         instance = this; 
@@ -101,6 +104,8 @@ public class EnemyController : MonoBehaviour
             anim.SetTrigger("Dead");
             GetComponent<Collider>().enabled = false;
             GetComponent<EnemyController>().enabled = false;
+
+            Instantiate(deathEffectPrefab,transform.position,Quaternion.identity); //Creates effect when zombie dies
 
             Destroy(gameObject,2f);
         }

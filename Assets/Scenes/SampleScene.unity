@@ -908,6 +908,7 @@ MonoBehaviour:
   currentHealth: 0
   maxHealth: 5
   damageAmount: 1
+  deathEffectPrefab: {fileID: 1141330259687333427, guid: 6718dc24203da53468af9ada8fef7d6d, type: 3}
 --- !u!1 &786365353
 GameObject:
   m_ObjectHideFlags: 0
