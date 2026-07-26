@@ -41,6 +41,9 @@ public class PlayerMovement : MonoBehaviour
 
     public Animator gunAnim;
 
+    public float timeBetweenShots;
+    private float shootCounter;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -118,6 +121,16 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
+        if(Input.GetMouseButton(0))
+        {
+            shootCounter -= Time.deltaTime;
+            if(shootCounter <= 0)
+            {
+                Shoot();
+            }
+        }
+
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Cursor.lockState = CursorLockMode.None; // Unlock the cursor when Escape key is pressed
@@ -143,6 +156,7 @@ public class PlayerMovement : MonoBehaviour
                 Debug.Log("We shoot shot" + hit.collider.gameObject.name); // Log the name of the object that was hit by the raycast
                 Instantiate(hitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal)); //Instantiate creates an object for hit effects
          }
+         shootCounter = timeBetweenShots;
     }
 
 
