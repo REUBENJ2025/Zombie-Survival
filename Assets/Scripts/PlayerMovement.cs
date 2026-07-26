@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 
 //Using float data type for movement speed and jump force to mak it smoother and more precise.
 //Time.deltaTime is used to calculate how long the key has been held down for
@@ -27,15 +28,41 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundLayer;
     private bool isOnGround;
 
+    // Camera Variables
+    public Transform playerViewPoint;
+    public float mouseSensitivity;
+    private float verticalRotation;
+    private Vector2 mouseInput;
+    public bool invertLook;
+    private Camera playerCamera;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         charcontroller = GetComponent<CharacterController>();
+        playerCamera = Camera.main;
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {   
+        //Horizontal rotation
+        mouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y")) * mouseSensitivity; // Input from player. Mouse X and Mouse Y are mapped to Unity Input Manager. Vector 2 Takes to parameters
+        transform.rotation=Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + mouseInput.x, transform.rotation.eulerAngles.z); // Rotate player based on mouse input. Quaternion.Euler is used to convert the rotation from degrees to radians to simplify the rotation. Quaternion is used to make rotation smoother
+
+        //Vertical rotation
+        verticalRotation += mouseInput.y;
+        verticalRotation = Mathf.Clamp(verticalRotation, -60f, 60f); // Max vertical rotation is 60 degrees up and down.
+
+        if(invertLook)
+        {
+            playerViewPoint.rotation = Quaternion.Euler(verticalRotation, playerViewPoint.eulerAngles.y, playerViewPoint.eulerAngles.z); // Invert camera if InvertLook is true.
+        }
+        else
+        {
+            playerViewPoint.rotation = Quaternion.Euler(-verticalRotation, playerViewPoint.eulerAngles.y, playerViewPoint.eulerAngles.z); // Normal camera if InvertLook is false.
+        }
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
         moveDirection = new Vector3(horizontalInput * moveSpeed, 0f, verticalInput * moveSpeed);
@@ -76,5 +103,12 @@ public class PlayerMovement : MonoBehaviour
         charcontroller.Move(movement *Time.deltaTime); 
         
 
+    }
+
+
+    private void LateUpdate() // Once Camera is initialized in void update, apply the results to the camera to ensure camera is updated after camera inputs.
+    {
+        playerCamera.transform.position = playerViewPoint.position;
+        playerCamera.transform.rotation = playerViewPoint.rotation;
     }
 }
