@@ -262,6 +262,7 @@ MonoBehaviour:
   mouseSensitivity: 1
   invertLook: 0
   hitEffectPrefab: {fileID: 1429954232896169633, guid: 83036083a4ebcd34f98131bd3cf6f4d2, type: 3}
+  gunAnim: {fileID: 6367194887130745549}
 --- !u!143 &145662237
 CharacterController:
   m_ObjectHideFlags: 0
@@ -4433,6 +4434,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6367194887130745548}
+  - component: {fileID: 6367194887130745549}
   m_Layer: 0
   m_Name: HandWithGun
   m_TagString: Untagged
@@ -4622,6 +4624,28 @@ Transform:
   - {fileID: 7479638851609150695}
   m_Father: {fileID: 786365354}
   m_LocalEulerAnglesHint: {x: 0, y: 4.496, z: 0}
+--- !u!95 &6367194887130745549
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5987257181558067318}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e594e2aed15686f4f9edf63ef14de355, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6427217258638919311
 GameObject:
   m_ObjectHideFlags: 0

@@ -39,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject hitEffectPrefab; //Impact effect
 
+    public Animator gunAnim;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -104,12 +106,15 @@ public class PlayerMovement : MonoBehaviour
         movement.y += (Physics.gravity.y * gravitymod * Time.deltaTime); // Change gravity to be more realistic for jump mechanic, ensure player returns to ground after jumping
         
         
-        charcontroller.Move(movement *Time.deltaTime); 
+        charcontroller.Move(movement *Time.deltaTime);
+
+        gunAnim.SetFloat("Speed", new Vector3(moveDirection.x, 0f, moveDirection.z).magnitude); // Set the speed parameter of the gun animator based on the player's movement speed
 
 
         if (Input.GetMouseButtonDown(0))
         {
             Shoot();
+            gunAnim.SetTrigger("Shoot");
         }
 
 
@@ -134,6 +139,7 @@ public class PlayerMovement : MonoBehaviour
        
        if (Physics.Raycast(ray, out RaycastHit hit))
          {
+                // gunAnim.SetTrigger("Shoot");
                 Debug.Log("We shoot shot" + hit.collider.gameObject.name); // Log the name of the object that was hit by the raycast
                 Instantiate(hitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal)); //Instantiate creates an object for hit effects
          }
