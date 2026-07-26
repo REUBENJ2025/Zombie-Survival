@@ -1037,8 +1037,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d73fb9f1b8bd63940bb881d103e1454a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
-  detectingRange: 5
-  moveSpeed: 1
+  detectingRange: 10
+  moveSpeed: 3
 --- !u!1 &786365353
 GameObject:
   m_ObjectHideFlags: 0

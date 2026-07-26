@@ -27,11 +27,28 @@ public class EnemyController : MonoBehaviour
         if (distance < detectingRange)
         {
             anim.SetBool("inRange", true); // Set inRage to true to make zombie run 
+            MoveTowards();
         }
         else
         {
             anim.SetBool("inRange", false); // If not in detecting range then zombie will not run 
         }
+
+
+    }
+
+    //Zombie chase
+    void MoveTowards()
+    {
+        // transform.position is the zombie position and player.position is the player's position
+
+        Vector3 playerPosition = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z); // Only use player x and z axis for reference to avoid floating for zombie 
+        Vector3 direction = (playerPosition - transform.position).normalized;
+
+        transform.position = Vector3.MoveTowards(transform.position,playerPosition,moveSpeed*Time.deltaTime); // FInding player and zombie position and moving zombie to player position 
+
+        transform.LookAt(playerPosition); //Rotate zombie to always look at player when chasing
+
 
 
     }
