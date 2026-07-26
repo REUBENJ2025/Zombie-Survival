@@ -44,6 +44,8 @@ public class PlayerMovement : MonoBehaviour
     public float timeBetweenShots;
     private float shootCounter;
 
+    public GameObject muzzle;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -114,18 +116,20 @@ public class PlayerMovement : MonoBehaviour
         gunAnim.SetFloat("Speed", new Vector3(moveDirection.x, 0f, moveDirection.z).magnitude); // Set the speed parameter of the gun animator based on the player's movement speed
 
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)) // Semi-automatic firing
         {
+            StartCoroutine(MuzzleFlah()); // Call MuzzleFlash Function
             Shoot();
             gunAnim.SetTrigger("Shoot");
         }
 
 
-        if(Input.GetMouseButton(0))
+        if(Input.GetMouseButton(0)) // Automatic firing
         {
             shootCounter -= Time.deltaTime;
             if(shootCounter <= 0)
             {
+                StartCoroutine(MuzzleFlah()); // Call MuzzleFlash Function
                 Shoot();
             }
         }
@@ -142,6 +146,15 @@ public class PlayerMovement : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked; // Lock the cursor when left mouse button is pressed
             }
         }
+    }
+
+
+    
+    IEnumerator MuzzleFlah() //Function for muzzle flash effect when shooting with a wait time of 0.02 seconds
+    {
+        muzzle.SetActive(true);
+        yield return new WaitForSeconds(0.02f);
+        muzzle.SetActive(false);
     }
 
 
