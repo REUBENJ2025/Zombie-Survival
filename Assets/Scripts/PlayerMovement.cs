@@ -22,6 +22,11 @@ public class PlayerMovement : MonoBehaviour
 
     public float gravitymod;
 
+    // Ground check variables
+    public Transform groundCheck;
+    public LayerMask groundLayer;
+    private bool isOnGround;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -56,9 +61,10 @@ public class PlayerMovement : MonoBehaviour
             movement.y = 0f; // Use isGround property of CharacterController to check if player is on the ground and reset vertical velocity to 0 when player is on the ground
         }
 
+        // Raycast to check if player is on ground (Similar to radar on a car)
+        isOnGround = Physics.Raycast(groundCheck.position, Vector3.down, 0.25f, groundLayer); // Use Raycast to check if player is on the ground by casting a ray downwards from the groundCheck position and checking if it hits the groundLayer within a distance of 0.25 
 
-
-        if (Input.GetButtonDown("Jump")) // Using GetButtonDown method uses the Input Manager built into Unity to check keybind set for jump
+        if (Input.GetButtonDown("Jump") && isOnGround)  // Using GetButtonDown method uses the Input Manager built into Unity to check keybind set for jump
         {
             movement.y = jumpForce; // Apply jump force to y axis of movement vector when jump button is pressed
         }
