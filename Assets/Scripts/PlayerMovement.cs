@@ -221,6 +221,17 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
+    private void OnTriggerEnter(Collider other) //Pick up magazine and update total magazine and destroy game object when picked up
+    {
+        if(other.gameObject.tag == "Mag")
+        {
+            mag += 2;
+            magText.text = mag.ToString();
+            Destroy(other.gameObject); //Destroys game objects
+        }
+    }
+
+
     private void LateUpdate() // Once Camera is initialized in void update, apply the results to the camera to ensure camera is updated after camera inputs.
     {
         playerCamera.transform.position = playerViewPoint.position;
