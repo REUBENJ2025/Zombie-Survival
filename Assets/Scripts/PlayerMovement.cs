@@ -104,6 +104,12 @@ public class PlayerMovement : MonoBehaviour
         charcontroller.Move(movement *Time.deltaTime); 
 
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            Shoot();
+        }
+
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Cursor.lockState = CursorLockMode.None; // Unlock the cursor when Escape key is pressed
@@ -115,6 +121,18 @@ public class PlayerMovement : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked; // Lock the cursor when left mouse button is pressed
             }
         }
+    }
+
+
+    private void Shoot() //Shoot function to determine if something has been hit by the raycast of the gun
+    {
+       Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f)); // Implement shooting logic here
+       ray.origin = playerCamera.transform.position;
+       
+       if (Physics.Raycast(ray, out RaycastHit hit))
+         {
+                Debug.Log("We shoot shot" + hit.collider.gameObject.name); // Log the name of the object that was hit by the raycast
+         }
     }
 
 
