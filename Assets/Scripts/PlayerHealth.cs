@@ -33,6 +33,7 @@ public class PlayerHealth : MonoBehaviour
     public void DealDamage()
     {
         currentHealth -= damageAmount; // Decrease health
+        UIController.instance.ShowDamage();
         healthbar.SetHealth(currentHealth); // Set HealthBar slider based on Player's health
         if (currentHealth <= 0)
         {
