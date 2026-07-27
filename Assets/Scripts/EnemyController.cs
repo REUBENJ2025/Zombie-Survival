@@ -71,6 +71,7 @@ public class EnemyController : MonoBehaviour
             else
             {
                 anim.SetBool("inRange", false); // If not in detecting range then zombie will not run 
+                agent.SetDestination(transform.position); // Prevent zombie moving while in Idle with AI pathfinding 
             }
 
 
