@@ -22,9 +22,14 @@ public class NewMonoBehaviourScript : MonoBehaviour
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, AttackRadius, playerLayer); // Storing data about detection in array inside the variable hitEnemies 
 
         //Loops each time player hits enemy, iterate through the array of potential enemies and once detected, decrease player health
-        foreach(Collider enemy in hitEnemies)
+        foreach(Collider enemy in hitEnemies) // enemy is player 
         {
-            Debug.Log("Player is damaged");
+           PlayerHealth playerHealth = enemy.GetComponent<PlayerHealth>();
+
+           if (playerHealth != null) // If zombie detects player do damage to player and player is alive 
+           {
+            playerHealth.DealDamage();
+           }
         }
 
     }

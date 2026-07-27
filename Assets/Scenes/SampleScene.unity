@@ -160,10 +160,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.49787146
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: -7.510084e-11, y: 0, z: 0.12241143}
 --- !u!23 &145662233
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   currentHealth: 0
-  maxHealth: 5
+  maxHealth: 100
   damageAmount: 1
   healthbar: {fileID: 570270100}
 --- !u!1 &159510354
@@ -1925,12 +1925,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1865452428}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 21.8, y: 129, z: 96.5}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 24.1, y: -94.3, z: 128}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 543450653121890463}
+  m_Father: {fileID: 3760230676345103504}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1977368687
 GameObject:
@@ -2533,11 +2533,11 @@ Transform:
   m_LocalScale: {x: 0.013, y: 0.013, z: 0.013}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2342369390793360779}
   - {fileID: 4036544023960527469}
   - {fileID: 6309691625891148344}
   - {fileID: 6474136244301178775}
   - {fileID: 1572101376698278140}
+  - {fileID: 2342369390793360779}
   - {fileID: 6345325775154626817}
   - {fileID: 3374408457215648188}
   - {fileID: 1575383064132946832}
@@ -2548,7 +2548,6 @@ Transform:
   - {fileID: 5908408192135775863}
   - {fileID: 596659634580435916}
   - {fileID: 8815173243890793976}
-  - {fileID: 1865452429}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -128.171, z: 0}
 --- !u!4 &550259110429991008
@@ -3217,7 +3216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCombat
   attackPoint: {fileID: 1865452429}
-  AttackRadius: 0.5
+  AttackRadius: 0.229
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -9364,7 +9363,7 @@ Transform:
   m_GameObject: {fileID: 6177319893233410333}
   serializedVersion: 2
   m_LocalRotation: {x: 0.49912703, y: -0.50087154, z: -0.49912694, w: 0.5008715}
-  m_LocalPosition: {x: 0.000004273747, y: 87.98528, z: -5.0017123}
+  m_LocalPosition: {x: 0, y: 87.98528, z: -5.0017123}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -49958,7 +49957,8 @@ Transform:
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1865452429}
   m_Father: {fileID: 543450653121890463}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &3763539959668675128
