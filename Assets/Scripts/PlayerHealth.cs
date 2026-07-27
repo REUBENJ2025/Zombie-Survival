@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviour
 
     public static PlayerHealth instance; // Track Player Health across different scripts
 
+    public HealthBar healthbar; // Pulls HealthBar.cs script contents
 
     private void Awake()
     {
@@ -19,6 +20,7 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
+        healthbar.SetMaxHealth(currentHealth); // using function from HealthBar.cs script
     }
 
     // Update is called once per frame
@@ -31,6 +33,7 @@ public class PlayerHealth : MonoBehaviour
     public void DealDamage()
     {
         currentHealth -= damageAmount; // Decrease health
+        healthbar.SetHealth(currentHealth); // Set HealthBar slider based on Player's health
         if (currentHealth <= 0)
         {
             //player dies
