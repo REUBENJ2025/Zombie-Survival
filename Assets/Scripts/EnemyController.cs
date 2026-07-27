@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class EnemyController : MonoBehaviour
 
     public GameObject deathEffectPrefab;
 
+    private NavMeshAgent agent;
 
     private void Awake() // Runs before game starts 
     {
@@ -38,6 +40,8 @@ public class EnemyController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player"); // Tells Unity we are refering to player 
 
         currentHealth = maxHealth; // Auto Updates
+
+        agent = GetComponent<NavMeshAgent>(); // Assigns NavMeshAgent 
     }
 
     // Update is called once per frame while game running 
@@ -78,13 +82,16 @@ public class EnemyController : MonoBehaviour
         // transform.position is the zombie position and player.position is the player's position
 
         Vector3 playerPosition = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z); // Only use player x and z axis for reference to avoid floating for zombie 
-        Vector3 direction = (playerPosition - transform.position).normalized;
 
-        transform.position = Vector3.MoveTowards(transform.position,playerPosition,moveSpeed*Time.deltaTime); // FInding player and zombie position and moving zombie to player position 
+        // ---- PRIOR AI CONTROL ---- //
 
-        transform.LookAt(playerPosition); //Rotate zombie to always look at player when chasing
+        //Vector3 direction = (playerPosition - transform.position).normalized;
 
+        //transform.position = Vector3.MoveTowards(transform.position,playerPosition,moveSpeed*Time.deltaTime); // FInding player and zombie position and moving zombie to player position 
 
+        //transform.LookAt(playerPosition); //Rotate zombie to always look at player when chasing
+
+        agent.SetDestination(playerPosition);
 
     }
 
@@ -104,6 +111,7 @@ public class EnemyController : MonoBehaviour
             anim.SetTrigger("Dead");
             GetComponent<Collider>().enabled = false;
             GetComponent<EnemyController>().enabled = false;
+            agent.enabled = false;
 
             Instantiate(deathEffectPrefab,transform.position,Quaternion.identity); //Creates effect when zombie dies
 
