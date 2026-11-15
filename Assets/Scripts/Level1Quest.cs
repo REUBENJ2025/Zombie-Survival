@@ -66,4 +66,9 @@ public class Level1Quest : MonoBehaviour
             quest1Text.color = Color.green; // Change quest text to green when completed
         }
     }
+
+    public bool IsCompleted()
+    {
+        return isCompleted;
+    }
 }
