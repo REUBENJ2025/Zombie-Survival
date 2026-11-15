@@ -16,6 +16,8 @@ public class Level1Quest : MonoBehaviour
 
     public Text quest1Text, quest2Text;
 
+    public GameObject caseFoundScreen;
+
     private void Awake()
     {
         instance = this;
@@ -54,6 +56,7 @@ public class Level1Quest : MonoBehaviour
 
     public void BriefCaseFound()
     {
+        StartCoroutine(FoundCaseCO()); // Call Coroutine function when briefcase is found 
         Briefcasefound = true;
         CheckQuestsCompletion(); // Call functions to create new quests 
         quest2Text.color = Color.green; // Change quest text to green when completed
@@ -70,5 +73,12 @@ public class Level1Quest : MonoBehaviour
     public bool IsCompleted()
     {
         return isCompleted;
+    }
+    IEnumerator FoundCaseCO() //Track when briefcase is found and display text for 3 seconds
+    {
+        caseFoundScreen.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        caseFoundScreen.SetActive(false);
+
     }
 }
