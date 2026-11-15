@@ -2,10 +2,12 @@
 
 using System.Collections; //Used for IEnumerator and coroutine
 using System.Collections.Generic; // Used for Lists and Dictionaries (Shown by <>)
+using Unity.VisualScripting;
 using UnityEngine; // Standard Unity libary such as Vectors and Physics
 using UnityEngine.AI; // Unity Libary for pathfinding and AI implimentation 
 using UnityEngine.InputSystem; // User inputs for keyboard/controller
 using UnityEngine.UI; //Import libary for text element adjustments
+
 
 //Using float data type for movement speed and jump force to mak it smoother and more precise.
 //Time.deltaTime is used to calculate how long the key has been held down for
@@ -77,6 +79,12 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
+
+
+      if (!Pause.instance.isPaused)
+        {
+
+        
         //Horizontal rotation
         mouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y")) * mouseSensitivity; // Input from player. Mouse X and Mouse Y are mapped to Unity Input Manager. Vector 2 Takes to parameters
         transform.rotation=Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + mouseInput.x, transform.rotation.eulerAngles.z); // Rotate player based on mouse input. Quaternion.Euler is used to convert the rotation from degrees to radians to simplify the rotation. Quaternion is used to make rotation smoother
@@ -93,7 +101,8 @@ public class PlayerMovement : MonoBehaviour
         {
             playerViewPoint.rotation = Quaternion.Euler(-verticalRotation, playerViewPoint.eulerAngles.y, playerViewPoint.eulerAngles.z); // Normal camera if InvertLook is false.
         }
-        horizontalInput = Input.GetAxisRaw("Horizontal");
+  
+         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
         moveDirection = new Vector3(horizontalInput * moveSpeed, 0f, verticalInput * moveSpeed);
         
@@ -177,9 +186,11 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Cursor.lockState = CursorLockMode.Locked; // Lock the cursor when left mouse button is pressed
+              //  Cursor.lockState = CursorLockMode.Locked; // Lock the cursor when left mouse button is pressed
             }
         }
+
+        } // Bracket ends the !paused if statement 
     }
 
     void Reload() // Remove mag and then replace ammo with ammount in the mag
@@ -219,7 +230,12 @@ public class PlayerMovement : MonoBehaviour
 
                 if(hit.collider.CompareTag("Enemy")) // Enemy Tag is able to be used across multiple scripts to track damage of zombies
                 {
-                    EnemyController.instance.TakeDamage();
+                    // EnemyController.instance.TakeDamage();
+                    EnemyController enemyController = hit.collider.gameObject.GetComponent<EnemyController>(); // Get the EnemyController component of the hit object
+                    if(enemyController != null)
+                {
+                    enemyController.TakeDamage();
+                }
                 }
          }
          shootCounter = timeBetweenShots;
@@ -238,8 +254,17 @@ public class PlayerMovement : MonoBehaviour
 
 
     private void LateUpdate() // Once Camera is initialized in void update, apply the results to the camera to ensure camera is updated after camera inputs.
+{
+
+   if (!Pause.instance.isPaused)
+
     {
+
         playerCamera.transform.position = playerViewPoint.position;
         playerCamera.transform.rotation = playerViewPoint.rotation;
+
+       
     }
+}
+
 }
